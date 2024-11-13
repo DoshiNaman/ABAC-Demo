@@ -1,50 +1,121 @@
-# React + TypeScript + Vite
+# ABAC (Attribute Based Access Control) Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based demonstration of Attribute Based Access Control implementation using TypeScript and Clerk Authentication.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project showcases a practical implementation of ABAC in a Todo application, where different users have varying levels of permissions based on their roles and relationships to resources.
 
-## Expanding the ESLint configuration
+### Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Role-Based Permissions**: Three distinct roles (Admin, Moderator, User) with different permission sets
+- **Resource Management**: Todo items and Comments with granular access control
+- **Real-time Permission Checking**: Dynamic permission validation for all actions
+- **Clerk Authentication**: Secure user authentication and role management
+- **Responsive UI**: Modern, mobile-friendly interface
 
-- Configure the top-level `parserOptions` property like this:
+## Permission Structure
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Admin
+- Full access to all todos and comments
+- Can manage system-wide permissions
+- Unrestricted CRUD operations
+
+### Moderator
+- Can view and create todos
+- Can update any todo
+- Can delete only completed todos
+- Full access to comments
+- Cannot manage permissions
+
+### User
+- Can view all todos
+- Can create todos
+- Can update own todos and todos where invited
+- Can delete own completed todos
+- Can view and create comments
+- Can only update own comments
+
+## Technical Stack
+
+- React
+- TypeScript
+- Clerk Authentication
+- Local Storage for data persistence
+- Custom ABAC implementation
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone [repository-url]
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Set up Clerk Authentication:
+   - Create a Clerk account
+   - Add your Clerk credentials to `.env`:
+
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_publishable_key
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+## Test Accounts
+
+| Email                   | Password  | Role     |
+|-------------------------|-----------|----------|
+| testuser1@gmail.com     | Admin@001 | User     |
+| testuser2@gmail.com     | Admin@001 | User     |
+| testuser3@gmail.com     | Admin@001 | Moderator |
+| naman.01798@gmail.com   | Admin@001 | Admin    |
+
+## Project Structure
+
+```
+src/
+├── data/
+│   ├── todos.ts       # Todo data management
+│   └── comments.ts    # Comments data management
+├── types/
+│   └── types.ts       # TypeScript types and ABAC logic
+└── App.tsx            # Main application component
+```
+
+## Key Components
+
+- **ABAC Implementation**: Located in `types/types.ts`
+- **Data Management**: Implemented in `data/` directory
+- **UI Components**: Modular components in `App.tsx`
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+
+Made by [Naman](https://www.linkedin.com/in/naman-doshi-007/)
+
+## Acknowledgments
+
+- Built with React, TypeScript, and Clerk Authentication
+- Inspired by real-world ABAC implementations
